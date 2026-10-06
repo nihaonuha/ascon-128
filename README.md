@@ -45,4 +45,4 @@ synthesized through openroad-flow-scripts, sky130hd pdk. the orfs-side config (`
 
 ## known limitation
 
-lvs isn't fully clean — diagnosed to known upstream tooling issues (openroad's cdl writer dropping power-net connectivity; magic's basic power-mesh extraction reporting fragmented nets), not a connectivity defect in the design. drc is clean and independently confirmed. full writeup in `docs/design_log.md` decision 8.
+lvs isn't fully clean — diagnosed to known upstream tooling issues (openroad's cdl writer dropping power-net connectivity; magic's basic power-mesh extraction reporting fragmented nets), not a connectivity defect in the design. drc is clean and independently confirmed. full writeup in `docs/design_log.md`.
