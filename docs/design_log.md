@@ -1,11 +1,8 @@
 # ascon core: design log
 
----
-
 ## 1. algorithm variant: ascon-128
 
 ascon-128 over the ascon-128a. ascon-128 is the primary variant in the nist standard and most commonly referenced version in the spec and literature. 128a also has a 128-bit rate compared to the 128's 64-bit rate, so i want to go for something small and standard/canonical.
-
 
 ## 2. s-box case-statement lookup table implementation
 
@@ -23,7 +20,6 @@ derived from the chi-like transform in the spec) — mathematically closer to
 both forms were verified to produce identical outputs against the same
 golden table.
 
-
 ## 3. verification strategy: golden-vector testing against an independent
    reference model
 
@@ -40,7 +36,6 @@ formulas) gives real evidence of correctness when both agree.
 semantics to hardware bit-widths (fixed-width `uint64_t`, explicit shifts),
 and a common choice for hardware verification reference models generally.
 
-
 ## 4. project directory structure
 
 **decision:**
@@ -54,7 +49,6 @@ and a common choice for hardware verification reference models generally.
 kept separate from `OpenROAD-flow-scripts/flow/designs/{src,sky130hd}/ascon/`,
 which will only be populated once a module is ready to actually go through
 the openroad flow (synthesis/place/route).
-
 
 ## 5. ppa target: optimize for area + power over performance
 
@@ -79,7 +73,6 @@ was purely combinational.
 instances) — simpler to build and verify, higher throughput, but
 significantly larger area and higher power. rejected given the ppa target
 above.
-
 
 ## 6. merge pt_process/ct_process, and share one permutation instance
    across all stages
@@ -136,7 +129,6 @@ thorough refactor — wrapper modules would still leave each stage owning its
 own permutation instance, missing the much larger win (5 permutation copies
 down to 1) that actually explains most of the area/power drop above.
 
-
 ## 7. placement density: settle on CORE_UTILIZATION=45 / PLACE_DENSITY=0.55
 
 **decision:** stop density tuning at `CORE_UTILIZATION=45`, `PLACE_DENSITY=0.55`
@@ -166,7 +158,6 @@ can revisit if the synthesis environment changes (more ram, faster machine)
 or if a future change shrinks the design further and makes tighter density
 cheap again.
 
-
 ## 8. drc/lvs signoff: drc clean, lvs attempted via two paths, stopped short
    of clean
 
@@ -175,7 +166,7 @@ cheap again.
 not reach a clean pass after two independent attempts, and we're stopping
 here rather than continuing to chase it.
 
-**why / what we found:**
+**why / what was found:**
 
 drc — `make drc` via klayout's `sky130hd.lydrc` ruleset: 0 violations.
 independent confirmation of what openroad's own route-time checks already
